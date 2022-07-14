@@ -1,54 +1,110 @@
 <html>
 <body>
 <div class="nav">
-	<button onclick="SetActivity(0)">Recipe</button>
-	<button onclick="SetActivity(1)">Ingredients</button>
+	<button onclick="SetActivity(0)">Back</button>
+	<button onclick="SetActivity(1)">Recipes</button>
+	<button onclick="SetActivity(3)">Recipe</button>
+	<button onclick="SetActivity(2)">Ingredients</button>
+	<!-- Activities / Pages -->
+	<div class="activity" id="welcome_page">
+		<!--
+			User actions available on welcome page:
+			- View Recipes
+			- View Ingredients Catalogue
+		-->
+	</div>
+	<div class="activity" id="recipes_page">
+		<!--
+			User actions available on welcome page:
+			- Store/Add New Recipes
+			- View & Search Stored Recipes
+			- Edit Stored Recipes
+			- Copy Stored Recipes
+			- Delete Stored Recipes
+		-->
+	</div>
+	<div class="activity" id="ingredients_page">
+		<!--
+			User actions available on welcome page:
+			- Store/Add New Ingredients
+			- View & Search Ingredients
+			- Edit Ingredients
+			- Delete Ingredients
+		-->
+	</div>
+	<div class="activity" id="edit_recipe_page">
+		<table>
+			<tr>
+				<th>Total Weight</th>
+				<th>Total Calories</th>
+				<th>Total Protein</th>
+				<th>Total Fat</th>
+				<th>Total Carbohydrates</th>
+				<th>Total Sugar</th>
+				<th>Total Fiber</th>
+				<th>Protein:Calorie Ratio</th>
+			</tr>
+		</table>
+	</div>
+	<div class="activity" id="edit_ingredient_page"></div>
+	<!-- Modals -->
+	<div class="modal" id="view_recipe_modal"></div>
+	<div class="modal" id="search_ingredient_modal"></div>
+	<div class="modal" id="view_ingredient_modal"></div>
 </div>
-<div class="activity" style="visibility: visible;" id="recipe_page">
-	<table>
-		<tr>
-			<th>Test</th>
-		</tr>
-		<tr>
-			<td>Hello World</td>
-		</tr>
-	</table>
-</div>
-<div class="activity" style="visibility: hidden;" id="ingredients_page"></div>
-<div class="activity" style="visibility: hidden;" id="add_ingredient_modal"></div>
 </body>
 <style>
-.nav, .activity {
+body {
+	font-size: 100%;
+	background-color: aqua;
+}
+
+p, button, th {
+	font-size: 2vh;
+}
+
+.nav, .activity, .modal {
 	top: 0;
-	left: 0;
-	right: 0;
+	width: 80vh;
+	left: calc(50vw - 40vh);
 	position: fixed;
 }
 
 .nav {
-	height: 2em;
+	height: 2.5em;
 	background-color: chocolate;
 }
 
-.activity {
+.activity, .modal {
+	height: 100%;
 	visibility: hidden;
-	margin-top: 2em;
-	padding-bottom: calc(150% - 2em);
+	margin-top: 2.5em;
 }
 
 #welcome_page { background-color: blue; }
-#recipe_page { background-color: brown; }
+#recipes_page { background-color: brown; }
+#edit_recipe_page { background-color: brown; }
 #ingredients_page { background-color: orange;}
-#add_ingredient_modal { background-color: greenyellow; }
+#add_ingredient_modal { background-color: yellow; }
+#select_ingredient_modal { background-color: greenyellow; }
 </style>
 <script>
 
-var CurrentActivity = 0;
+// We may need to create an activity stack for use with the back button, or we could just
+// go straight back to the welcome page (ie. back to root)
+var CurrentActivity = 1;
 
 var Activities = [
-	document.getElementById("recipe_page"),
+	document.getElementById("welcome_page"),
+	document.getElementById("recipes_page"),
 	document.getElementById("ingredients_page"),
-	document.getElementById("add_ingredient_modal"),
+	document.getElementById("edit_recipe_page"),
+	document.getElementById("edit_ingredient_page"),
+];
+
+var Modals = [
+	document.getElementById("search_ingredient_modal"),
+	document.getElementById("view_ingredient_modal"),
 ];
 
 Activities[CurrentActivity].style.visibility = "visible";
