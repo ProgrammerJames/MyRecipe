@@ -1,24 +1,81 @@
 <html>
 <body>
-<div class="main">
-	<div style="z-index: 1;" id="recipe_page">
-		<table>
-			<tr>
-				<th>Test</th>
-			</tr>
-			<tr>
-				<td>Hello World</td>
-			</tr>
-		</table>
-	</div>
-	<div style="z-index: 0;" id="ingredients_page"></div>
-	<div style="z-index: 2;" id="add_ingredient_modal"></div>
+<div class="nav">
+	<button onclick="SetActivity(0)">Recipe</button>
+	<button onclick="SetActivity(1)">Ingredients</button>
 </div>
+<div class="activity" style="visibility: visible;" id="recipe_page">
+	<table>
+		<tr>
+			<th>Test</th>
+		</tr>
+		<tr>
+			<td>Hello World</td>
+		</tr>
+	</table>
+</div>
+<div class="activity" style="visibility: hidden;" id="ingredients_page"></div>
+<div class="activity" style="visibility: hidden;" id="add_ingredient_modal"></div>
 </body>
 <style>
-.main {
-	margin: auto;
-	background-color: brown;
-	padding-bottom: 150%;
+.nav, .activity {
+	top: 0;
+	left: 0;
+	right: 0;
+	position: fixed;
 }
+
+.nav {
+	height: 2em;
+	background-color: chocolate;
+}
+
+.activity {
+	visibility: hidden;
+	margin-top: 2em;
+	padding-bottom: calc(150% - 2em);
+}
+
+#welcome_page { background-color: blue; }
+#recipe_page { background-color: brown; }
+#ingredients_page { background-color: orange;}
+#add_ingredient_modal { background-color: greenyellow; }
 </style>
+<script>
+
+var CurrentActivity = 0;
+
+var Activities = [
+	document.getElementById("recipe_page"),
+	document.getElementById("ingredients_page"),
+	document.getElementById("add_ingredient_modal"),
+];
+
+Activities[CurrentActivity].style.visibility = "visible";
+
+function SetActivity(activity) {
+	Activities[CurrentActivity].style.visibility = "hidden";
+	CurrentActivity = activity;
+	Activities[CurrentActivity].style.visibility = "visible";
+}
+
+class Ingredient {
+	constructor(name, price = 0, cal = 0, prot = 0, fat = 0, carb = 0, sugar = 0, fiber = 0) {
+		this.name = name;
+		this.price = price; // Per serve
+		this.calories = cal; // Per serve
+		this.protein = prot; // Per serve, grams
+		this.fat = fat; // Per serve, grams
+		this.carbohydrates = carb; // Per serve, grams
+		this.sugar = sugar; // Per serve, grams
+		this.fiber = fiber; // Per serve, grams
+	}
+}
+
+var Catalogue = [
+	// Ingredient 1
+	// Ingredient 2
+	// Ingredient 3
+	// Etc
+];
+</script>
