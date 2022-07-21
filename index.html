@@ -33,18 +33,38 @@
 		-->
 	</div>
 	<div class="activity" id="edit_recipe_page">
-		<table>
-			<tr>
-				<th>Total Weight</th>
-				<th>Total Calories</th>
-				<th>Total Protein</th>
-				<th>Total Fat</th>
-				<th>Total Carbohydrates</th>
-				<th>Total Sugar</th>
-				<th>Total Fiber</th>
-				<th>Protein:Calorie Ratio</th>
-			</tr>
-		</table>
+		<div class="stat">
+			<p class="stat_label">Total Weight</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Calories</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Protein</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Fat</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Carbohydrates</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Sugar</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Total Fiber</p>
+			<p class="stat_value">Test Value</p>
+		</div>
+		<div class="stat">
+			<p class="stat_label">Protein : Calorie Ratio</p>
+			<p class="stat_value">Test Value</p>
+		</div>
 	</div>
 	<div class="activity" id="edit_ingredient_page"></div>
 	<!-- Modals -->
@@ -65,8 +85,8 @@ p, button, th {
 
 .nav, .activity, .modal {
 	top: 0;
-	width: 80vh;
-	left: calc(50vw - 40vh);
+	width: min(100vw, 80vh);
+	left: calc(50vw - min(50vw, 40vh));
 	position: fixed;
 }
 
@@ -81,6 +101,26 @@ p, button, th {
 	margin-top: 2.5em;
 }
 
+.stat {
+	text-align: center;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.stat_label {
+	outline: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+	margin-bottom: 0px;
+}
+
+.stat_value {
+	outline: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+	margin-top: 0px;
+}
+
 #welcome_page { background-color: blue; }
 #recipes_page { background-color: brown; }
 #edit_recipe_page { background-color: brown; }
@@ -89,7 +129,6 @@ p, button, th {
 #select_ingredient_modal { background-color: greenyellow; }
 </style>
 <script>
-
 // We may need to create an activity stack for use with the back button, or we could just
 // go straight back to the welcome page (ie. back to root)
 var CurrentActivity = 1;
@@ -114,6 +153,43 @@ function SetActivity(activity) {
 	CurrentActivity = activity;
 	Activities[CurrentActivity].style.visibility = "visible";
 }
+
+class Category {
+	constructor(label, property_name) {
+		this.label = label;
+		this.property_name = property_name;
+		Object.freeze(this);
+	}
+}
+
+// Do we need this, or should we just copy the code where we need it?
+// function get_ingredient_value(ingredient, category) {
+// 	return ingredient[category.label];
+// }
+
+const NutrientCategories = [
+	new Category("Calories", "calories"),
+	new Category("Protein", "protein"),
+	new Category("Fat", "fat"),
+	new Category("Carbohydrates", "carbohydrates"),
+	new Category("Sugar", "sugar"),
+	new Category("Fiber", "fiber"),
+];
+
+function GenerateStatTables(parent, categories, prefix = "", suffix = "") {
+	for (var i=0; i<categories.length; i++) {
+		var d = document.createElement("div");
+		d.className = "stat";
+
+		var l = document.createElement("p");
+		l.className = "stat_label";
+
+		var v = document.createElement("p");
+		v.className = "stat_value";
+	}
+}
+
+GenerateStatTables(document.getElementById("edit_recipe_page"), NutrientCategories);
 
 class Ingredient {
 	constructor(name, price = 0, cal = 0, prot = 0, fat = 0, carb = 0, sugar = 0, fiber = 0) {
